@@ -24,22 +24,20 @@ describe('Verify provider contract', () => {
   it('set provider data', async () =>{
 
   await providerDataContract.methods
-  .setProviderData(1234, "1425 South wolf rd", "Not Available",
-  "H02345", "test@yahoo.co.in",1234, "Harikrishna",
-  "10/10/2020", 1111111111, 123456789, "17", "011")
+  .setProviderData(1234, 60070, "1425 South wolf rd", "Available", 1234, "Harikrishna", 8473722334, "Physician")
   .send({from: accounts[0], gas:1000000});
 
-    console.log('responce is ', await providerDataContract.methods.getProviderData(1234, 0).call());
+    console.log('responce is ', await providerDataContract.methods.getProviderDataById(1234, 0).call());
 
   });
 
   it('create contract object and retrieve data', async () =>{
 
-    const obj = new web3.eth.Contract(JSON.parse(interface), "0x89Fbd1376CD74F873CD9356970654e6f0aC53343");
+    const obj = new web3.eth.Contract(JSON.parse(interface), "0xACafe329BCb55D88c925bA4CA075e03c60105459");
 
     console.log('returned object is  ', obj.options.address);
 
-    console.log('Retrieved response from 0x89Fbd1376CD74F873CD9356970654e6f0aC53343 is ', await obj.methods.getProviderData(1234, 0).call());
+    console.log('Retrieved response from 0xACafe329BCb55D88c925bA4CA075e03c60105459 is ', await obj.methods.getProviderDataById(1234, 0).call());
   });
 
 });

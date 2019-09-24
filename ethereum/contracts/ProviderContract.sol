@@ -2,43 +2,60 @@ pragma solidity ^0.4.25;
 
 contract ProviderContract {
 
-struct Address{
-    string addressLine1;
-}
-
 struct Detail{
-    Address addr;
+    string addr;
+    uint zipCode;
     string availabilityStatus;
-    string dsplPCP;
-    string email;
     uint256 id;
     string name;
-    string ntwkTermEffDate;
     uint phoneNumber;
-    uint premierId;
     string providerType;
-    string speciailityCode;
 }
 
-mapping(uint => Detail[]) providerDetails;
+mapping(uint => Detail[]) public providerDataById;
 
- function setProviderData(uint providerId, string addr, string  status, string dsplPCP, string email, uint id, string name,
- string ntwkTermEffDate, uint phoneNumber, uint premierId, string providerType, string speciailityCode) public {
-    Address memory addrObj = Address(addr);
-   providerDetails[providerId].push(Detail({addr: addrObj, availabilityStatus: status, dsplPCP: dsplPCP,
-   email: email, id: id, name: name, ntwkTermEffDate: ntwkTermEffDate, phoneNumber: phoneNumber,
-   premierId: premierId, providerType: providerType, speciailityCode: speciailityCode}));
+mapping(string => Detail[]) providerDataByName;
+
+mapping(uint => Detail[]) providerDataByZip;
+
+mapping(string => Detail[]) providerDataByCity;
+
+function setProviderData(uint providerId, uint zipCode, string addr, string  status, uint id, string name, uint phoneNumber,string providerType) public {
+
+    Detail memory detail = Detail({zipCode: zipCode, addr: addr, availabilityStatus: status,
+   id: id, name: name, phoneNumber: phoneNumber, providerType: providerType});
+
+    providerDataById[providerId].push(detail);
  }
 
- function getProviderData(uint providerId, uint index) public view returns (string, string) {
-     Detail[] memory detail = providerDetails[providerId];
+ function getProviderDataById(uint providerId, uint index) public view returns (string, uint, string, uint, uint, string, string) {
+     Detail[] memory detail = providerDataById[providerId];
 
-     Address memory addr = detail[index].addr;
-   return (addr.addressLine1, detail[index].availabilityStatus);
+   return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
  }
 
-function getProviderDetailsCount(uint providerId) public constant returns(uint){
-     return providerDetails[providerId].length;
+function getProviderDataByIdCount(uint providerId) public constant returns(uint){
+     return providerDataById[providerId].length;
+}
+
+function getProviderDataByZipCode(uint zipCode, uint index) public view returns (string, uint, string, uint, uint, string, string) {
+    Detail[] memory detail = providerDataByZip[zipCode];
+
+  return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
+}
+
+function getProviderDataByZipCodeCount(uint zipCode) public constant returns(uint){
+    return providerDataByZip[zipCode].length;
+}
+
+function getProviderDataByName(string name, uint index) public view returns (string, uint, string, uint, uint, string, string) {
+    Detail[] memory detail = providerDataByName[name];
+
+  return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
+}
+
+function getProviderDataByNameCount(string name) public constant returns(uint){
+    return providerDataByName[name].length;
 }
 
 }
