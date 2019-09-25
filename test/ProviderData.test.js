@@ -12,7 +12,7 @@ beforeEach(async () => {
 
   providerDataContract = await new web3.eth.Contract(JSON.parse(interface))
   .deploy({data:bytecode, arguments:[]})
-  .send({from: accounts[1],  gasPrice: '1000000000', gas: '2000000'});
+  .send({from: accounts[1],  gasPrice: '1000000000', gas: '3000000'});
 
   console.log('address is', providerDataContract.options.address);
 });
@@ -48,7 +48,7 @@ describe('Verify provider contract', () => {
 
   it('create contract object and retrieve data', async () =>{
 
-    const obj = new web3.eth.Contract(JSON.parse(interface), "0x0968ae5d6F17c0A1BAe043B032d1a6350F03E558");
+    const obj = new web3.eth.Contract(JSON.parse(interface), "0xbD14d0D51743347e7736074c99e432E34264cFCd");
 
     console.log('returned object is  ', obj.options.address);
 
@@ -79,6 +79,16 @@ describe('Verify provider contract', () => {
     }
 
     console.log('Retrieved response based on state ', dataByState);
+
+    let dataByName = [];
+    const countByName = await obj.methods.getProviderDataByNameCount("Harikrishna").call();
+
+    for(let i=0; i<countByName; i++){
+      dataByName.push(await obj.methods.getProviderDataByName("Harikrishna", i).call())
+    }
+
+    console.log('Retrieved response based on Name', dataByName);
+
   });
 
 });

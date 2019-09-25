@@ -55,15 +55,25 @@ function setProviderData(uint providerId, uint zipCode, string addr, string stat
       return providerDataByZip[zipCode].length;
  }
 
-  function getProviderDataByState(string name, uint index) public view returns (string, string, uint, string, uint, string, string) {
-      Detail[] memory detail = providerDataByName[name];
+  function getProviderDataByState(string state, uint index) public view returns (string, string, uint, string, uint, string, string) {
+      Detail[] memory detail = providerDataByState[state];
 
       return ( detail[index].name, detail[index].addr, detail[index].zipCode,
       detail[index].state, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
   }
 
- function getProviderDataByStateCount(string name) public constant returns(uint){
-      return providerDataByName[name].length;
+ function getProviderDataByStateCount(string state) public constant returns(uint){
+      return providerDataByState[state].length;
  }
 
+ function getProviderDataByName(string name, uint index) public view returns (string, string, uint, string, uint, string, string) {
+     Detail[] memory detail = providerDataByName[name];
+
+     return ( detail[index].name, detail[index].addr, detail[index].zipCode,
+     detail[index].state, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
+ }
+
+function getProviderDataByNameCount(string name) public constant returns(uint){
+     return providerDataByName[name].length;
+}
 }
