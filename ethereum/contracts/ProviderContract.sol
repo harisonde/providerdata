@@ -26,6 +26,8 @@ function setProviderData(uint providerId, uint zipCode, string addr, string  sta
    id: id, name: name, phoneNumber: phoneNumber, providerType: providerType});
 
     providerDataById[providerId].push(detail);
+    providerDataByName[name].push(detail);
+    providerDataByZip[zipCode].push(detail);
  }
 
  function getProviderDataById(uint providerId, uint index) public view returns (string, uint, string, uint, uint, string, string) {
@@ -34,28 +36,25 @@ function setProviderData(uint providerId, uint zipCode, string addr, string  sta
    return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
  }
 
-function getProviderDataByIdCount(uint providerId) public constant returns(uint){
-     return providerDataById[providerId].length;
-}
 
-function getProviderDataByZipCode(uint zipCode, uint index) public view returns (string, uint, string, uint, uint, string, string) {
-    Detail[] memory detail = providerDataByZip[zipCode];
+  function getProviderDataByZipCode(uint zipCode, uint index) public view returns (string, uint, string, uint, uint, string, string) {
+      Detail[] memory detail = providerDataByZip[zipCode];
 
-  return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
-}
+    return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
+  }
 
-function getProviderDataByZipCodeCount(uint zipCode) public constant returns(uint){
-    return providerDataByZip[zipCode].length;
-}
+ function getProviderDataByZipCodeCount(uint zipCode) public constant returns(uint){
+      return providerDataByZip[zipCode].length;
+ }
 
-function getProviderDataByName(string name, uint index) public view returns (string, uint, string, uint, uint, string, string) {
-    Detail[] memory detail = providerDataByName[name];
+  function getProviderDataByName(string name, uint index) public view returns (string, uint, string, uint, uint, string, string) {
+      Detail[] memory detail = providerDataByName[name];
 
-  return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
-}
+    return ( detail[index].name,  detail[index].id, detail[index].addr,detail[index].zipCode, detail[index].phoneNumber, detail[index].availabilityStatus, detail[index].providerType);
+  }
 
-function getProviderDataByNameCount(string name) public constant returns(uint){
-    return providerDataByName[name].length;
-}
+ function getProviderDataByNameCount(string name) public constant returns(uint){
+      return providerDataByName[name].length;
+ }
 
 }
